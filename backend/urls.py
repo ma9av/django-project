@@ -17,9 +17,27 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from accounts.models import Account
+from crm.views import CRUDViewSet
+from leads.models import Lead
+from opportunities.models import Opportunity
+
+lead_crud = CRUDViewSet()
+lead_crud.model = Lead
+
+account_crud = CRUDViewSet()
+account_crud.model = Account
+
+opportunity_crud = CRUDViewSet()
+opportunity_crud.model = Opportunity
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('leads/', include((lead_crud.get_urls(),'leads'),'leads')),
+    path('accounts/', include((account_crud.get_urls(),'accounts'),'accounts')),
+    path('opportunities/', include((opportunity_crud.get_urls(),'opportunities'),'opportunities')),
     path('api/auth/', include('users.urls')),
     path('api/', include('leads.urls')),
     path('api/', include('opportunities.urls')),
+
 ]

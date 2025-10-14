@@ -1,0 +1,17 @@
+{% load custom_tags %}
+<tr id="row-{{ obj.id }}">
+    {% for field in fields %}
+        <td>{{ obj|get_attr:field }}</td>
+    {% endfor %}
+    <td>
+      <button class="btn btn-sm btn-secondary"
+              hx-get="{{ obj.id }}/update/"
+              hx-target="#modal-body"
+              hx-swap="innerHTML">Edit</button>
+      <button class="btn btn-sm btn-danger"
+              hx-get="{{ obj.id }}/delete/"
+              hx-target="#modal-body"
+              hx-swap="innerHTML">Delete</button>
+    </td>
+  </tr>
+  
